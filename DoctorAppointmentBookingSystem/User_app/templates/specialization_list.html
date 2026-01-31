@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Specializations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/sidecards.css' %}">
+
+    <style>
+        .spec-box {
+            background: #f7f7f7;
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .spec-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #e5e5e5;
+            text-decoration: none;
+            color: #000;
+        }
+        .spec-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .spec-icon {
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c70025;
+            font-weight: bold;
+        }
+        .arrow {
+            color: #c70025;
+            font-size: 18px;
+        }
+        .side-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* DARK CARD */
+.side-card.dark {
+    background-color: #1f2d3d;
+    color: #ffffff;
+}
+
+.side-card.dark i {
+    font-size: 22px;
+    color: #ffffff;
+}
+
+/* HOVER EFFECT */
+.side-card.dark:hover {
+    background-color: #c70025;
+    transform: translateX(6px);
+}
+
+/* HELP CARD */
+.side-card.help {
+    background: linear-gradient(135deg, #c70025, #8b0000);
+    color: #ffffff;
+    padding: 22px;
+}
+
+.side-card.help h5 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.side-card.help p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.side-card.help i {
+    margin-right: 8px;
+}
+.navbar-custom {
+            background-color: #b11226; /* hospital red */
+        }
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #ffd6d6;
+        }
+        .hero {
+            background-color: #fdf3f3;
+            padding: 60px 0;
+        }
+        body{
+            background-image: url("");
+        }
+        .navbar-light .nav-link {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .navbar-light .nav-link:hover {
+              color: #b11226;
+        }
+    
+
+    </style>
+</head>
+ <!-- TOP HEADER -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#">Care Connect🏥</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Login</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- SECOND NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container">
+
+        <!-- Empty div pushes menu to the right -->
+        <div class="ms-auto">
+            <ul class="navbar-nav align-items-center">
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'homepage' %}">
+                        Home
+                    </a>
+                </li>
+
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="">
+                        Specialization🩺
+                    </a>
+                </li>
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'doctor_list' %}">
+                        Find a Doctor🧑‍⚕️
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-danger px-4 py-2 rounded-pill fw-semibold"
+                       href="{% url 'book_appointment' %}">
+                        Book an Appointment 🗓️
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<body class="container mt-5">
+
+<h2 class="mb-4 text-danger">All Specialities</h2>
+
+<div class="spec-box">
+    {% for spec in specializations %}
+        <a href="{% url 'doctor_by_specialization' spec %}" class="spec-item">
+            <div class="spec-left">
+                <div class="spec-icon">+</div>
+                <strong>{{ spec }}</strong>
+            </div>
+            <span class="arrow">›</span>
+        </a>
+    {% endfor %}
+</div>
+ <div class="col-lg-4">
+
+            <a href="{% url 'doctor_list' %}" class="side-card dark text-decoration-none">
+                <i class="bi bi-person-badge"></i>
+                <span>Find a Doctor</span>
+                <i class="bi bi-arrow-right-circle"></i>
+            </a>
+
+            <a href="" class="side-card dark text-decoration-none">
+                <i class="bi bi-calendar-check"></i>
+                <span>Book an Appointment</span>
+                <i class="bi bi-arrow-right-circle"></i>
+            </a>
+
+            <div class="side-card help">
+                <h5>Need Help in Booking an Appointment?</h5>
+                <p>
+                    <a href="tel:+914712941400" class="text-white text-decoration-none">
+                        <i class="bi bi-telephone-fill"></i> +91 471 294 1400
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-light pt-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- App Info -->
+            <div class="col-md-4 mb-3">
+                <h5>CARE CONNECT</h5>
+                <p class="small">
+                    Online doctor appointment booking system for quick,
+                    easy, and secure healthcare access.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                     <li><a href="#" class="text-light text-decoration-none">Specialization</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Find a Doctor</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Book Appointment</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4 mb-3">
+                <h5>Contact Us</h5>
+                <p class="small mb-1">📍 India</p>
+                <p class="small mb-1">📞 +91 98765 43210</p>
+                <p class="small">✉️ support@careconnect.com</p>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <div class="text-center pb-3">
+            <small>
+                © 2025 | Made by Admin | Doctor Appointment Booking System
+            </small>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

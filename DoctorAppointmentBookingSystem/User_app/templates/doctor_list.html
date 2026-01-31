@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor List</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .page-title {
+            font-weight: 600;
+            color: #36588d;
+            
+        }
+
+        .doctor-card {
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .doctor-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .doctor-info {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .availability {
+            font-size: 13px;
+            color: #1159c6;
+            font-weight: 500;
+        }
+        .speciality-bar {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 10px;
+}
+
+.speciality-select {
+    width: 250px;
+}
+.navbar-custom {
+            background-color: #b11226; /* hospital red */
+        }
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #ffd6d6;
+        }
+        .hero {
+            background-color: #fdf3f3;
+            padding: 60px 0;
+        }
+        body{
+            background-image: url("");
+        }
+        .navbar-light .nav-link {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .navbar-light .nav-link:hover {
+              color: #b11226;
+        }
+    
+
+    </style>
+</head>
+<body>
+    <!-- TOP HEADER -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#">Care Connect🏥</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Login</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- SECOND NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container">
+
+        <!-- Empty div pushes menu to the right -->
+        <div class="ms-auto">
+            <ul class="navbar-nav align-items-center">
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'homepage' %}">
+                        Home
+                    </a>
+                </li>
+
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'specialization_list' %}">
+                        Specialization🩺
+                    </a>
+                </li>
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'doctor_list' %}">
+                        Find a Doctor🧑‍⚕️
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-danger px-4 py-2 rounded-pill fw-semibold"
+                       href="{% url 'book_appointment' %}">
+                        Book an Appointment 🗓️
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4 page-title">Find A Doctor</h2>
+
+    <div class="container my-4">
+    <div class="speciality-bar shadow-sm">
+
+        <label for="speciality" class="fw-semibold me-3">
+            🔍 Specialization:
+        </label>
+
+        <select id="speciality" class="form-select speciality-select">
+            <option value="">Select Specialization </option>
+            <option>Pediatrics</option>
+            <option>Cardiology</option>
+            <option>Orthopedics</option>
+            <option>Dermatology</option>
+            <option>Neurology</option>
+            <option>Gastrology</option>
+            <option>Oncology</option>
+            <option>ENT</option>
+            <option>Urology</option>
+            <option>Rheumatology</option>
+            <option>Gynecology</option>
+            <option>Respiratory Medicine</option>
+            <option>Endocrinology</option>
+            <option>Gastrosciences</option>
+        </select>
+
+        <button class="btn btn-danger ms-3 px-4">
+            Search
+        </button>
+
+    </div>
+</div>
+
+<h3 class="mb-4 text-center">
+    {{ selected_specialization }} Doctors
+</h3>
+
+
+    <div class="row">
+        {% for doctors in doctors %}
+        <div class="col-md-4">
+
+            <div class="card doctor-card mb-4">
+                <div class="card-body text-center">
+
+                    <h3 class="card-title doctor-name">
+                        Dr. {{ doctors.user.username }}
+                    </h3>
+
+                    <p class="card-text doctor-info">
+                        <strong></strong> {{ doctors.designation }} <br>
+                        <h5> <strong></strong> {{ doctors.specialization }}</h5><br>
+                        
+                        
+  {% if doctors.photo %}
+    <img src="{{ doctors.photo.url }}" class="card-img-top" style="height:250px; object-fit:cover;">
+  {% else %}
+    <img src="{% static 'images/default_doctors.png' %}" class="card-img-top">
+  {% endif %}
+                    </p>
+
+                    <a href="{% url 'book_appointment' %}"
+                       class="btn btn-info w-100 mt-2">
+                        Book Appointment
+                    </a>
+
+                    <a href="{% url 'doctor_profile' doctors.id %}"
+                   
+                       class="btn btn-secondary w-100 mt-2">
+                        View Profile
+                    </a>
+                     
+                </div>
+            </div>
+
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No doctors available</p>
+        {% endfor %}
+    </div>
+
+</div>
+<footer class="bg-dark text-light pt-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- App Info -->
+            <div class="col-md-4 mb-3">
+                <h5>CARE CONNECT</h5>
+                <p class="small">
+                    Online doctor appointment booking system for quick,
+                    easy, and secure healthcare access.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                     <li><a href="#" class="text-light text-decoration-none">Specialization</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Find a Doctor</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Book Appointment</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4 mb-3">
+                <h5>Contact Us</h5>
+                <p class="small mb-1">📍 India</p>
+                <p class="small mb-1">📞 +91 98765 43210</p>
+                <p class="small">✉️ support@careconnect.com</p>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <div class="text-center pb-3">
+            <small>
+                © 2025 | Made by Admin | Doctor Appointment Booking System
+            </small>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ABC Health</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .navbar-custom {
+            background-color: #6230be; /* hospital red */
+        }
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #ffd6d6;
+        }
+        .hero {
+            background-color: #fdf3f3;
+            padding: 60px 0;
+        }
+        body{
+            background-image: url("");
+           
+        }
+        .navbar-light .nav-link {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .navbar-light .nav-link:hover {
+              color: #b11226;
+        }
+    
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.specialities {
+    padding: 40px 60px;
+}
+
+.specialities h2 {
+    color: #b30000;
+    margin-bottom: 30px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-body h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.card-body p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.card-body a {
+    color: #b30000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.card-body a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- TOP HEADER -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#">Care Connect🏥</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Login</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- SECOND NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container">
+
+        <!-- Empty div pushes menu to the right -->
+        <div class="ms-auto">
+            <ul class="navbar-nav align-items-center">
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'homepage' %}">
+                        Home
+                    </a>
+                </li>
+
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'specialization_list' %}">
+                        Specialization🩺
+                    </a>
+                </li>
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'doctor_list' %}">
+                        Find a Doctor🧑‍⚕️
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-secondary px-4 py-2 rounded-pill fw-semibold"
+                       href="{% url 'book_appointment' %}">
+                        Book an Appointment 🗓️
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+
+            <!-- RIGHT IMAGE -->
+            <!-- <div class="col-md-8 text-center">
+                <img src="https://static.vecteezy.com/system/resources/previews/013/141/034/large_2x/book-doctor-appointment-card-template-schedule-hospital-visit-editable-social-media-post-design-flat-color-illustration-for-poster-web-banner-ecard-vector.jpg" width="600px", height="600px"
+                     class="img-fluid"
+                     alt="Hospital Image">
+                    
+            </div> -->
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://www.moh.gov.sa/en/eServices/Sehhaty/PublishingImages/2022-08-18-002.png" class="d-block w-100" alt="...">
+    </div>
+        </div>
+    </div>
+
+<br>
+<br>
+
+
+</section>
+<section class="specialities">
+    <h2>Our Specialities</h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <img src="https://srmglobalhospitals.com/wp-content/uploads/2024/06/How-institute-of-cardiac-science-work-you.jpg" alt="Cardiac Sciences">
+            <div class="card-body">
+                <h3>Cardiac Sciences</h3>
+                <p>Advanced care for heart-related conditions.</p>
+                <a href="#">Read More →</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://kaminenihospitals.com/wp-content/uploads/2023/07/Orthopedics-02.jpg" alt="Orthopedics">
+            <div class="card-body">
+                <h3>Orthopedics</h3>
+                <p>Bone, joint, and muscle treatments.</p>
+                <a href="#">Read More →</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://wakeforestpediatrics.com/wp-content/uploads/2020/10/Choosing-a-Pediatrician.jpeg" alt="Pediatrics">
+            <div class="card-body">
+                <h3>Pediatrics</h3>
+                <p>Treatment for children's growth,health and development</p>
+                <a href="#">Read More →</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://img.freepik.com/premium-photo/stomach-anatomy-with-digestive-enzyme-pathway-illustration-gastroenterology-science-technology-research-concept-genetic-biology-laboratory-diagnosis-digestive-disorder-treatment_1294533-2669.jpg?w=2000" alt="Gastro Sciences">
+            <div class="card-body">
+                <h3>Gastro Sciences</h3>
+                <p>Digestive system treatments.</p>
+                <a href="#">Read More →</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- 
+ Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="bg-dark text-light pt-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- App Info -->
+            <div class="col-md-4 mb-3">
+                <h5>CARE CONNECT</h5>
+                <p class="small">
+                    Online doctor appointment booking system for quick,
+                    easy, and secure healthcare access.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'homepage' %}" class="text-light text-decoration-none">Home</a></li>
+                     <li><a href="{% url 'specialization_list' %}" class="text-light text-decoration-none">Specialization</a></li>
+                    <li><a href="{% url 'doctor_list' %}" class="text-light text-decoration-none">Find a Doctor</a></li>
+                    <li><a href="book_appointment" class="text-light text-decoration-none">Book Appointment</a></li>
+                    <li><a href="{% url 'contact_us' %}" class="text-light text-decoration-none">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4 mb-3">
+                <h5>Contact Us</h5>
+                <p class="small mb-1">📍 India</p>
+                <p class="small mb-1">📞 +91 98765 43210</p>
+                <p class="small">✉️ support@careconnect.com</p>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <div class="text-center pb-3">
+            <small>
+                © 2025 | Made by Admin | Doctor Appointment Booking System
+            </small>
+        </div>
+    </div>
+</footer> 
+
+</body>
+</html>

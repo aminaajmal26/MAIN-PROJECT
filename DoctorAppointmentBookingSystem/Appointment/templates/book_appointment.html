@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Appointment</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #b11226; /* hospital red */
+        }
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {
+            color: white;
+        }
+        .navbar-custom .nav-link:hover {
+            color: #ffd6d6;
+        }
+        .hero {
+            background-color: #fdf3f3;
+            padding: 60px 0;
+        }
+        body{
+            background-image: url("");
+           
+        }
+        .navbar-light .nav-link {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .navbar-light .nav-link:hover {
+              color: #b11226;
+        }
+    
+
+
+    </style>
+</head>
+
+<body class="bg-light">
+    <!-- TOP HEADER -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#">Care Connect🏥</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Login</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- SECOND NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container">
+
+        <!-- Empty div pushes menu to the right -->
+        <div class="ms-auto">
+            <ul class="navbar-nav align-items-center">
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'homepage' %}">
+                        Home
+                    </a>
+                </li>
+
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'specialization_list' %}">
+                        Specialization🩺
+                    </a>
+                </li>
+
+                <li class="nav-item me-4">
+                    <a class="nav-link fw-semibold text-dark"
+                       href="{% url 'doctor_list' %}">
+                        Find a Doctor🧑‍⚕️
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-danger px-4 py-2 rounded-pill fw-semibold"
+                       href="{% url 'book_appointment' %}">
+                        Book an Appointment 🗓️
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white text-center">
+                    <h4>Book an Appointment</h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Full Name</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Contact Number</label>
+                                {{ form.contact_number }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Gender</label>
+                                {{ form.gender }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            {{ form.location }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Specialization</label>
+                            {{ form.specialization }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Doctor</label>
+                            {{ form.user }}
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Appointment Date</label>
+                                {{ form.appointment_date }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Appointment Time</label>
+                                {{ form.appointment_time }}
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                Confirm Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ✅ SUCCESS MODAL -->
+{% if messages %}
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Appointment Confirmed</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <h4>✅ Booking Successful</h4>
+                <p>Your appointment has been booked successfully.</p>
+            </div>
+
+            <!-- <div class="modal-footer">
+                <a href="{% url 'appointment_history' %}" class="btn btn-success">
+                    View Appointments
+                </a>
+            </div> -->
+
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ✅ AUTO SHOW MODAL -->
+{% if messages %}
+<script>
+    const modal = new bootstrap.Modal(document.getElementById('successModal'));
+    modal.show();
+</script>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="bg-dark text-light pt-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- App Info -->
+            <div class="col-md-4 mb-3">
+                <h5>CARE CONNECT</h5>
+                <p class="small">
+                    Online doctor appointment booking system for quick,
+                    easy, and secure healthcare access.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                     <li><a href="#" class="text-light text-decoration-none">Specialization</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Find a Doctor</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Book Appointment</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4 mb-3">
+                <h5>Contact Us</h5>
+                <p class="small mb-1">📍 India</p>
+                <p class="small mb-1">📞 +91 98765 43210</p>
+                <p class="small">✉️ support@careconnect.com</p>
+            </div>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <div class="text-center pb-3">
+            <small>
+                © 2025 | Made by Admin | Doctor Appointment Booking System
+            </small>
+        </div>
+    </div>
+</footer> 
+
+</body>
+</html>

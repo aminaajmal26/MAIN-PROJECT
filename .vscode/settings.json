@@ -1,0 +1,36 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "AppointmentSystem",
+            "group": "doctorsystem",
+            "database": "DoctorAppointmentSystem",
+            "username": "root",
+            "password": "ami naroot"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "password": "aminaroot",
+            "username": "root",
+            "database": "DoctorAppointmentSystem",
+            "group": "AppointmentSystem",
+            "name": "doctorsystem"
+        }
+    ]
+}
